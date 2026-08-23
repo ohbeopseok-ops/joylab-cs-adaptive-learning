@@ -1,0 +1,13 @@
+JoyLab CS Eval V0.1
+================================================
+PASS  schema_pass_rate                     1.000  gate >= 1.00
+PASS  primary_weakness_accuracy            1.000  gate >= 0.85
+PASS  weakness_recall_at_2                 1.000  gate >= 0.95
+PASS  evidence_precision                   1.000  gate >= 0.90
+PASS  critical_recall                      1.000  gate >= 0.95
+PASS  false_weakness_rate                  0.000  gate <= 0.10
+PASS  behavior_score_within_1_accuracy     1.000  gate >= 0.90
+================================================
+FINAL: PASS
+
+NOTE: This is a harness smoke test using demo predictions aligned with the Gold Dataset. It is not a real LLM performance result.
