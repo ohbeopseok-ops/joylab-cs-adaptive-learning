@@ -1,13 +1,14 @@
 {
   "name": "joylab-cs-adaptive-learning",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "analyze:gold": "tsx src/run-gold.ts",
     "eval:fixture": "python evals/evaluate.py examples/demo-predictions.json",
-    "eval:live": "npm run analyze:gold && python evals/evaluate.py examples/live-predictions.json"
+    "eval:live": "npm run analyze:gold && python evals/evaluate.py examples/live-predictions.json",
+    "benchmark:example": "tsx src/benchmark.ts examples/benchmark-results.example.json"
   },
   "dependencies": {
     "openai": "^5.20.0",
