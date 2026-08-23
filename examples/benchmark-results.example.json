@@ -1,0 +1,32 @@
+{
+  "candidates": [
+    {
+      "name": "prompt-v0.2",
+      "prompt": "prompts/analyzer-system.md",
+      "predictionPath": "examples/live-v0.2.json",
+      "metrics": {
+        "schema_pass_rate": 1.0,
+        "primary_weakness_accuracy": 0.87,
+        "weakness_recall_at_2": 0.96,
+        "evidence_precision": 0.92,
+        "critical_recall": 1.0,
+        "false_weakness_rate": 0.08,
+        "behavior_score_within_1_accuracy": 0.91
+      }
+    },
+    {
+      "name": "prompt-v0.3",
+      "prompt": "prompts/analyzer-system-v0.3.md",
+      "predictionPath": "examples/live-v0.3.json",
+      "metrics": {
+        "schema_pass_rate": 1.0,
+        "primary_weakness_accuracy": 0.90,
+        "weakness_recall_at_2": 0.97,
+        "evidence_precision": 0.94,
+        "critical_recall": 1.0,
+        "false_weakness_rate": 0.07,
+        "behavior_score_within_1_accuracy": 0.92
+      }
+    }
+  ]
+}
