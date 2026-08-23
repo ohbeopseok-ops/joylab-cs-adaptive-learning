@@ -1,0 +1,60 @@
+name: Live Gold30 A-B Benchmark
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/live-benchmark-trigger'
+
+permissions:
+  contents: read
+
+jobs:
+  live-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: gpt-5.4-mini
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Require API key
+        shell: bash
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "OPENAI_API_KEY secret is not configured."
+            exit 1
+          fi
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Run Prompt V0.2 vs V0.3 Gold30 benchmark
+        run: npm run benchmark:live
+
+      - name: Upload benchmark results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-gold30-ab-benchmark
+          path: |
+            examples/live-predictions-v0.2.json
+            examples/live-predictions-v0.3.json
+            examples/benchmark-results-live.json
+          if-no-files-found: warn
+          retention-days: 30
