@@ -14,13 +14,17 @@ function transcriptText(input: GoldCase): string {
 
 export async function analyzeCase(
   input: GoldCase,
-  client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY }),
+  options: {
+    client?: OpenAI;
+    promptPath?: string;
+  } = {},
 ): Promise<Prediction> {
   if (!process.env.OPENAI_API_KEY) {
     throw new Error('OPENAI_API_KEY is required for live analyzer execution.');
   }
 
-  const promptPath = path.resolve('prompts/analyzer-system.md');
+  const client = options.client ?? new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const promptPath = path.resolve(options.promptPath ?? 'prompts/analyzer-system.md');
   const systemPrompt = await fs.readFile(promptPath, 'utf8');
 
   const response = await client.responses.parse({
@@ -45,10 +49,7 @@ export async function analyzeCase(
   });
 
   const parsed = response.output_parsed;
-  if (!parsed) {
-    throw new Error(`No structured output returned for ${input.case_id}`);
-  }
-
+  if (!parsed) throw new Error(`No structured output returned for ${input.case_id}`);
   if (parsed.case_id !== input.case_id) {
     throw new Error(`case_id mismatch: expected ${input.case_id}, got ${parsed.case_id}`);
   }
@@ -56,9 +57,7 @@ export async function analyzeCase(
   const transcript = transcriptText(input);
   for (const evidence of parsed.evidence) {
     if (!transcript.includes(evidence.quote)) {
-      throw new Error(
-        `Evidence quote is not verbatim transcript text for ${input.case_id}: ${evidence.quote}`,
-      );
+      throw new Error(`Evidence quote is not verbatim transcript text for ${input.case_id}: ${evidence.quote}`);
     }
   }
 
