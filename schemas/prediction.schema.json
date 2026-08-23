@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "JoyLab Prediction Schema",
+  "type": "object",
+  "required": [
+    "case_id",
+    "primary_weakness",
+    "critical_error",
+    "leader_attention_required",
+    "behavior_scores",
+    "evidence"
+  ],
+  "properties": {
+    "case_id": {"type": "string"},
+    "primary_weakness": {"type": ["string", "null"]},
+    "critical_error": {"type": "boolean"},
+    "leader_attention_required": {"type": "boolean"},
+    "behavior_scores": {
+      "type": "object",
+      "additionalProperties": {"type": "number", "minimum": 1, "maximum": 5}
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["behavior", "quote"],
+        "properties": {
+          "behavior": {"type": "string"},
+          "quote": {"type": "string"}
+        }
+      }
+    },
+    "status": {"type": "string"}
+  }
+}
