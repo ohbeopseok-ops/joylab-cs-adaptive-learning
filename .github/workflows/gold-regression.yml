@@ -27,7 +27,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -35,7 +34,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install Node dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
       - name: Typecheck
         run: npm run typecheck
@@ -58,7 +57,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -73,7 +71,7 @@ jobs:
           fi
 
       - name: Install Node dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
       - name: Live analyzer + Gold evaluation
         run: npm run eval:live
