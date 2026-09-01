@@ -39,7 +39,7 @@ jobs:
           fi
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --no-audit --no-fund
 
       - name: Typecheck
         run: npm run typecheck
