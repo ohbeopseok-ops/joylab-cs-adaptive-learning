@@ -34,7 +34,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install Node dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Typecheck
         run: npm run typecheck
@@ -71,7 +71,7 @@ jobs:
           fi
 
       - name: Install Node dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Live analyzer + Gold evaluation
         run: npm run eval:live
